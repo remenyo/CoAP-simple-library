@@ -212,10 +212,11 @@ int Coap::parseOption(CoapOption *option, uint16_t *running_delta, uint8_t **buf
     return 0;
 }
 
-bool Coap::loop() {
+int32_t Coap::loop() {
 
     uint8_t buffer[COAP_BUF_MAX_SIZE];
     int32_t packetlen = _udp->parsePacket();
+    int32_t original_packet_length = packetlen();
 
     while (packetlen > 0) {
         packetlen = _udp->read(buffer, packetlen >= COAP_BUF_MAX_SIZE ? COAP_BUF_MAX_SIZE : packetlen);
@@ -302,7 +303,7 @@ bool Coap::loop() {
         packetlen = _udp->parsePacket();
     }
 
-    return true;
+    return original_packet_length;
 }
 
 uint16_t Coap::sendResponse(IPAddress ip, int port, uint16_t messageid) {
