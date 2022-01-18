@@ -216,7 +216,7 @@ int32_t Coap::loop() {
 
     uint8_t buffer[COAP_BUF_MAX_SIZE];
     int32_t packetlen = _udp->parsePacket();
-    int32_t original_packet_length = packetlen();
+    int32_t original_packet_length = packetlen;
 
     while (packetlen > 0) {
         packetlen = _udp->read(buffer, packetlen >= COAP_BUF_MAX_SIZE ? COAP_BUF_MAX_SIZE : packetlen);
